@@ -2,7 +2,8 @@ from BaseCalculations.Opertaor import Operator
 
 
 class Factorial(Operator):
-    def calculate(self, num1, num2=None):
+    @staticmethod
+    def calculate(num1, num2=None):
         if num1 < 0:
             raise ValueError("Cannot factorial negative numbers")
         if not isinstance(num1, int):
@@ -11,3 +12,7 @@ class Factorial(Operator):
         for i in range(2, num1):
             result *= i
         return result
+
+    @staticmethod
+    def getPriority():
+        return 6

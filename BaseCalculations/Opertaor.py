@@ -1,4 +1,14 @@
 from abc import ABC, abstractmethod
+
+
 class Operator(ABC):
-    def calculate(self,num1,num2):
+
+    @staticmethod
+    @abstractmethod
+    def getPriority():
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def calculate(num1, num2):
         pass
