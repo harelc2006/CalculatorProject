@@ -9,3 +9,7 @@ class Modulo(Operator):
     @staticmethod
     def getPriority():
         return 4
+
+    @staticmethod
+    def getOperatorLoc():
+        return 1

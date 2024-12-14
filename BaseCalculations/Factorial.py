@@ -1,3 +1,4 @@
+
 from BaseCalculations.Opertaor import Operator
 
 
@@ -16,3 +17,7 @@ class Factorial(Operator):
     @staticmethod
     def getPriority():
         return 6
+
+    @staticmethod
+    def getOperatorLoc():
+        return 2

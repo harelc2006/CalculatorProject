@@ -9,3 +9,7 @@ class Tilde(Operator):
     @staticmethod
     def getPriority():
         return 6
+
+    @staticmethod
+    def getOperatorLoc():
+        return 0

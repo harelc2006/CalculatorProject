@@ -11,3 +11,7 @@ class Power(Operator):
     @staticmethod
     def getPriority():
         return 3
+
+    @staticmethod
+    def getOperatorLoc():
+        return 1

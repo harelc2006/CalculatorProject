@@ -9,3 +9,7 @@ class UnaryMinus(Operator):
     @staticmethod
     def getPriority():
         return 2.5
+
+    @staticmethod
+    def getOperatorLoc():
+        return 0

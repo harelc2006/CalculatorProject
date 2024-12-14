@@ -12,3 +12,7 @@ class Collapse(Operator):
     @staticmethod
     def getPriority():
         return 6
+
+    @staticmethod
+    def getOperatorLoc():
+        return 2

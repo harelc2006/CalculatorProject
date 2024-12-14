@@ -56,14 +56,60 @@ def ValidTildeUse(exp):
             acceptable = getDigits() + ['(']
             b1 = index + 2 < len(trimmed) and (trimmed[index + 1] == '-' and trimmed[index + 2] in acceptable)
             b2 = index + 1 < len(trimmed) and trimmed[index + 1] in acceptable
-            b3 = index+1 != len(trimmed)
+            b3 = index + 1 != len(trimmed)
             i = exp.index("~")
             if not (b3 and (b1 or b2)):
                 while i < len(exp) and not exp[i] in acceptable:
                     i += 1
                 errorMessage += exp[exp.index("~"):i + 1] + " is not valid use of tilde\n"
-            exp = exp[i+1:]
+            exp = exp[i + 1:]
     return errorMessage
+
+
+def ValidUseOfOperators(exp):
+    errorMessage = ""
+    i = 0
+    orders = [[0, 1, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0]]
+    lefts = (getLeftOperators() + getDigits() + list(getParentheses()[0]))
+    rights = (getRightOperators() + getDigits() + list(getParentheses()[1]))
+    while i < len(exp):
+        if exp[i] in getOperators():
+            loc = getClass(exp[i]).getOperatorLoc()
+            b1 = i - 1 >= 0 and exp[i - 1] in rights
+            b2 = i + 1 < len(exp) and exp[i + 1] in lefts
+            b3 = i + 1 == len(exp) or exp[i + 1] in getBinaryOperators() + getRightOperators() + list(
+                getParentheses()[1])
+            b4 = i - 1 == -1 or exp[i - 1] in getBinaryOperators() + getLeftOperators() + list(getParentheses()[0])
+            booleans = [b1, b2, b3, b4]
+            if exp[i] != '-':
+                # print(b1,b2,b3,b4)
+                if not ((loc == 0 and b2 and b4) or (loc == 1 and b1 and b2) or (loc == 2 and b1 and b3)):
+                    errorMessage += bugExplanation(loc, booleans, exp, i) + "\n"
+
+        i += 1
+    return errorMessage
+
+
+def bugExplanation(loc, booleans, exp, i):
+    if loc == 1:
+        if booleans[0]:
+            lst = [exp[i + 1] if i + 1 < len(exp) else "empty", "right"]
+        else:
+            lst = [exp[i - 1] if i - 1 >= 0 else "empty", "left"]
+        return lst[0] + " cannot be on the " + lst[1] + " of a binary operator"
+    if loc == 0:
+        if booleans[3]:
+            lst = [exp[i + 1], "right"]
+        else:
+            lst = [exp[i - 1], "left"]
+        return lst[0] + " cannot be on the " + lst[1] + " of a left operator"
+    if loc == 2:
+        if booleans[3]:
+            lst = [exp[i - 1], "left"]
+        else:
+            lst = [exp[i + 1], "right"]
+        return lst[0] + " cannot be on the " + lst[1] + " of a right operator"
+
 
 
 

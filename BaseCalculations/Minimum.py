@@ -9,3 +9,7 @@ class Minimum(Operator):
     @staticmethod
     def getPriority():
         return 5
+
+    @staticmethod
+    def getOperatorLoc():
+        return 1

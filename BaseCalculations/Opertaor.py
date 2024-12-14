@@ -12,3 +12,8 @@ class Operator(ABC):
     @abstractmethod
     def calculate(num1, num2):
         pass
+
+    @staticmethod
+    @abstractmethod
+    def getOperatorLoc():
+        pass

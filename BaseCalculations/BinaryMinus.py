@@ -9,3 +9,7 @@ class BinaryMinus(Operator):
     @staticmethod
     def getPriority():
         return 1
+
+    @staticmethod
+    def getOperatorLoc():
+        return 1

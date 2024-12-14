@@ -9,3 +9,7 @@ class Multiply(Operator):
     @staticmethod
     def getPriority():
         return 2
+
+    @staticmethod
+    def getOperatorLoc():
+        return 1
