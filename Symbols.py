@@ -50,7 +50,7 @@ def getLeftOperators():
     for op in (getSingleMeaningOperators()):
         if getClass(op).getOperatorLoc() == 0:
             lefts.append(op)
-    return lefts
+    return lefts + ['-']
 
 
 def getClass(sym):
