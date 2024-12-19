@@ -21,6 +21,10 @@ def getSingleMeaningOperators():
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#']
 
 
+def getOperatorsAfterConversion():
+    return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#', 'B', 'U']
+
+
 def getDigits():
     return list("123456789")
 
@@ -56,7 +60,8 @@ def getLeftOperators():
 def getClass(sym):
     dictionary = {
         '+': Plus,
-        '-': [BinaryMinus, UnaryMinus],
+        'B': BinaryMinus,
+        'U': UnaryMinus,
         '*': Multiply,
         '/': Divide,
         '^': Power,
@@ -69,3 +74,7 @@ def getClass(sym):
         '#': Collapse,
     }
     return dictionary[sym]
+
+
+def getLoc(op):
+    return getClass(op).getOperatorLoc()
