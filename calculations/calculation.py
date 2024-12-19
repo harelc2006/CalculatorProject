@@ -11,11 +11,11 @@ def calc(operator, n1, n2=None):
 
 
 def calculation(pfix):
-    print(pfix)
     answer = []
     i = 0
     for token in pfix:
         if token not in getOperatorsAfterConversion():
+            token = token.replace('S', '-')
             answer.append(token)
         else:
             if getLoc(token) == 1:
@@ -25,4 +25,6 @@ def calculation(pfix):
             else:
                 n1 = float(answer.pop())
                 answer.append(calc(token, n1))
-    return answer
+    return answer[0]
+
+

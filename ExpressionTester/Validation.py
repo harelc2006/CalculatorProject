@@ -1,6 +1,6 @@
 from Symbols import *
-from Trim.Trimmer import allMinusTrimmer
-from Trim.Trimmer import minusTrimmer
+from MinusManage.Trimmer import allMinusTrimmer
+from MinusManage.Trimmer import minusTrimmer
 
 
 def emptyExpression(exp):
