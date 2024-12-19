@@ -21,12 +21,21 @@ def getSingleMeaningOperators():
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#']
 
 
+def getAllOperators():
+    return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#', 'B', 'U', 'S']
+
+
 def getOperatorsAfterConversion():
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#', 'B', 'U']
 
 
+
+def getMinusTypes():
+    return ['B', 'U', 'S']
+
+
 def getDigits():
-    return list("123456789")
+    return list("0123456789")
 
 
 def getParentheses():
@@ -35,7 +44,7 @@ def getParentheses():
 
 def getBinaryOperators():
     bins = []
-    for op in getSingleMeaningOperators():
+    for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 1:
             bins.append(op)
     return bins
@@ -43,7 +52,7 @@ def getBinaryOperators():
 
 def getRightOperators():
     rights = []
-    for op in getSingleMeaningOperators():
+    for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 2:
             rights.append(op)
     return rights
@@ -51,10 +60,10 @@ def getRightOperators():
 
 def getLeftOperators():
     lefts = []
-    for op in (getSingleMeaningOperators()):
+    for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 0:
             lefts.append(op)
-    return lefts + ['-']
+    return lefts + ['S']
 
 
 def getClass(sym):

@@ -1,3 +1,4 @@
+from MinusManage.Convert import conversion
 from Symbols import *
 from MinusManage.Trimmer import allMinusTrimmer
 from MinusManage.Trimmer import minusTrimmer
@@ -47,14 +48,13 @@ def validSequence(exp):
 def ValidTildeUse(exp):
     errorMessage = ""
     if exp.count("~") > 0:
+        acceptable = getDigits() + ['(']
         while exp.count("~") > 0:
-            trimmed = allMinusTrimmer(exp)
-            index = trimmed.index("~")
-            acceptable = getDigits() + ['(']
-            b1 = index + 2 < len(trimmed) and (trimmed[index + 1] == '-' and trimmed[index + 2] in acceptable)
-            b2 = index + 1 < len(trimmed) and trimmed[index + 1] in acceptable
-            b3 = index + 1 != len(trimmed)
-            i = exp.index("~")
+            index = exp.index("~")
+            b1 = index + 2 < len(exp) and (exp[index + 1] in ['S', 'U'] and exp[index + 2] in acceptable)
+            b2 = index + 1 < len(exp) and exp[index + 1] in acceptable
+            b3 = index + 1 != len(exp)
+            i = index
             if not (b3 and (b1 or b2)):
                 while i < len(exp) and not exp[i] in acceptable:
                     i += 1
@@ -91,27 +91,24 @@ def ValidUseOfOperators(exp):
     lefts = (getLeftOperators() + getDigits() + list(getParentheses()[0]))
     rights = (getRightOperators() + getDigits() + list(getParentheses()[1]))
     while i < len(exp):
-        if exp[i] in getOperators():
+        if exp[i] in getAllOperators():
             b1 = i - 1 >= 0 and exp[i - 1] in rights
             b2 = i + 1 < len(exp) and exp[i + 1] in lefts
             b3 = i + 1 == len(exp) or exp[i + 1] in getBinaryOperators() + getRightOperators() + list(
                 getParentheses()[1])
             b4 = i - 1 == -1 or exp[i - 1] in getBinaryOperators() + getLeftOperators() + list(getParentheses()[0])
             booleans = [b1, b2, b3, b4]
-            if exp[i] != '-':
+            if exp[i] != 'S':
                 loc = getClass(exp[i]).getOperatorLoc()
                 if not ((loc == 0 and b2 and b4) or (loc == 1 and b1 and b2) or (loc == 2 and b1 and b3)):
                     errorMessage += bugExplanation(loc, booleans, exp, i) + "\n"
             else:
-                if not ((b2 and b4) or (b1 and b2)):
-                    if not (b1 or b2 or b4):
-                        errorMessage += "minus has to be used a either a left or a binary operator\n"
-                    else:
-                        if not b2:
-                            errorMessage += (exp[i + 1] if i + 1 < len(exp) else "empty") + " cannot be on the right of" \
-                                                                                            " a minus\n"
-                        if not (b4 or b1):
-                            errorMessage += "you have to use a minus as binary or an unary operator\n"
+                b = i + 1 < len(exp) and exp[i + 1] in (getDigits() + list(getParentheses()[0]) + list('S'))
+                if not (b and b4):
+                    if not b:
+                        errorMessage += "sign minus have to be before a number or (\n"
+                    if not b2:
+                        errorMessage += "sign minus can only come after a binary/left operator or a (\n"
 
         i += 1
     return errorMessage
@@ -128,7 +125,7 @@ def checkParentheses(exp):
         if ch == ')':
             count -= 1
             if count < 0:
-                errorMessage += ") with no open for it in position: " + i + "\n"
+                errorMessage += ") with no open for it in position: " + str(i) + "\n"
         i += 1
     if count != 0:
         errorMessage += "number of ( doesnt match the number of )"
@@ -163,18 +160,52 @@ def validateFloatNumber(number):
 
 
 def validateExpression(exp):
+    print("----------------")
+    print(exp)
     em = ""
     em += emptyExpression(exp)
     if em != "":
-        raise SyntaxError(em)
-    exp = minusTrimmer(exp)
-    em += validSymbols(exp)
+        print(em)
+        return
+    exp = exp.replace(" ", "")
     em += validSymbols(exp)
     em += validSequence(exp)
+    exp = conversion(exp)
+    exp = minusTrimmer(exp)
     em += ValidTildeUse(exp)
     em += ValidUseOfOperators(exp)
     em += checkParentheses(exp)
     em += floatValidation(exp)
     if em != "":
-        raise SyntaxError(em)
-    print("valid expression")
+        print(em)
+    else:
+        print("valid expression")
+
+
+validateExpression("2 * ^ 3")
+validateExpression("5 +")
+validateExpression("gibberish")
+validateExpression("2 * ^ 3")
+validateExpression("2 @ 3 ?")
+validateExpression("(3 + 5")
+validateExpression("3 + (2 * 3")
+validateExpression("3 + 5)")
+validateExpression("~ + 2")
+validateExpression("10 %% 3")
+validateExpression("5 $ @ 3")
+validateExpression("3 @ + 4")
+validateExpression("")
+validateExpression("   ")
+validateExpression("3 + (2 - 1")
+validateExpression("3 & @ 2")
+validateExpression("! 5")
+validateExpression("5 ! +")
+validateExpression("5a + 3")
+validateExpression("2 ^^ 3")
+validateExpression("(3 + )")
+validateExpression("()")
+validateExpression("123 $")
+validateExpression("10 / 0")
+validateExpression("10 % 0")
+validateExpression("2--3!")
+validateExpression("(2---3!)^((~-3!)@5)")
