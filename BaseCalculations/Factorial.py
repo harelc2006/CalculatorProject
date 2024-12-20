@@ -10,6 +10,8 @@ class Factorial(Operator):
         if not num1.is_integer():
             raise ValueError("Cannot factorial non integers  numbers")
         result = 1
+        if num1 > 25000:
+            raise ArithmeticError("Too long to calculate")
         for i in range(2, int(num1) + 1):
             result *= i
         return result

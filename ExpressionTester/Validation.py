@@ -8,14 +8,14 @@ def emptyExpression(exp):
     errorMessage = ""
     if len(exp) > 0:
         if len(exp) == exp.count(' ') + exp.count('\t') + exp.count('\n') + exp.count('\r'):
-            errorMessage += "white space expression"
+            errorMessage += "white space expression\n"
     else:
-        errorMessage += "empty expression"
+        errorMessage += "empty expression\n"
     return errorMessage
 
 
 def validSymbols(exp):
-    symbols = getOperators() + getDigits() + getParentheses()
+    symbols = getOperators() + getDigits() + getParentheses() + list('.')
     errorMessage = ""
     for char in exp:
         if char not in symbols:
@@ -40,7 +40,7 @@ def validSequence(exp):
     errorMessage = ""
     symbols = getDigits() + getParentheses() + ['-']
     for sym in dup:
-        if sym not in symbols:
+        if sym not in symbols and sym in getOperators():
             errorMessage += "cannot put " + sym + " consecutively\n"
     return errorMessage
 
@@ -69,19 +69,19 @@ def bugExplanation(loc, booleans, exp, i):
             lst = [exp[i + 1] if i + 1 < len(exp) else "empty", "right"]
         else:
             lst = [exp[i - 1] if i - 1 >= 0 else "empty", "left"]
-        return lst[0] + " cannot be on the " + lst[1] + " of a binary operator"
+        return lst[0] + " cannot be on the " + lst[1] + " of a binary operator\n"
     if loc == 0:
         if booleans[3]:
             lst = [exp[i + 1] if i + 1 < len(exp) else "empty", "right"]
         else:
             lst = [exp[i - 1] if i - 1 >= 0 else "empty", "left"]
-        return lst[0] + " cannot be on the " + lst[1] + " of a left operator"
+        return lst[0] + " cannot be on the " + lst[1] + " of a left operator\n"
     if loc == 2:
         if booleans[3]:
             lst = [exp[i - 1] if i - 1 >= 0 else "empty", "left"]
         else:
             lst = [exp[i + 1] if i + 1 < len(exp) else "empty", "right"]
-        return lst[0] + " cannot be on the " + lst[1] + " of a right operator"
+        return lst[0] + " cannot be on the " + lst[1] + " of a right operator\n"
 
 
 def ValidUseOfOperators(exp):
@@ -128,7 +128,7 @@ def checkParentheses(exp):
                 errorMessage += ") with no open for it in position: " + str(i) + "\n"
         i += 1
     if count != 0:
-        errorMessage += "number of ( doesnt match the number of )"
+        errorMessage += "number of ( doesnt match the number of )\n"
     return errorMessage
 
 
@@ -160,16 +160,15 @@ def validateFloatNumber(number):
 
 
 def validateExpression(exp):
-    print("----------------")
-    print(exp)
     em = ""
     em += emptyExpression(exp)
     if em != "":
-        print(em)
-        return
-    exp = exp.replace(" ", "")
+        raise SyntaxError(em)
+    exp = exp.replace(" ", "").replace("\t", "")
     em += validSymbols(exp)
     em += validSequence(exp)
+    if em != "":
+        raise SyntaxError(em)
     exp = conversion(exp)
     exp = minusTrimmer(exp)
     em += ValidTildeUse(exp)
@@ -177,35 +176,7 @@ def validateExpression(exp):
     em += checkParentheses(exp)
     em += floatValidation(exp)
     if em != "":
-        print(em)
-    else:
-        print("valid expression")
-
-
-validateExpression("2 * ^ 3")
-validateExpression("5 +")
-validateExpression("gibberish")
-validateExpression("2 * ^ 3")
-validateExpression("2 @ 3 ?")
-validateExpression("(3 + 5")
-validateExpression("3 + (2 * 3")
-validateExpression("3 + 5)")
-validateExpression("~ + 2")
-validateExpression("10 %% 3")
-validateExpression("5 $ @ 3")
-validateExpression("3 @ + 4")
-validateExpression("")
-validateExpression("   ")
-validateExpression("3 + (2 - 1")
-validateExpression("3 & @ 2")
-validateExpression("! 5")
-validateExpression("5 ! +")
-validateExpression("5a + 3")
-validateExpression("2 ^^ 3")
-validateExpression("(3 + )")
-validateExpression("()")
-validateExpression("123 $")
-validateExpression("10 / 0")
-validateExpression("10 % 0")
-validateExpression("2--3!")
-validateExpression("(2---3!)^((~-3!)@5)")
+        em = em.replace("S ", "sign minus ")
+        em = em.replace("B ", "binary minus ")
+        em = em.replace("U ", "unary minus ")
+        raise SyntaxError(em)
