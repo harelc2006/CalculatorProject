@@ -48,11 +48,16 @@ def getDigits():
 
 
 def getParentheses():
-    """"returns: the Parentheses"""
+    """"
+    returns: the Parentheses
+    """
     return ['(', ')']
 
 
 def getBinaryOperators():
+    """"
+    returns: the binary operators
+    """
     bins = []
     for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 1:
@@ -61,6 +66,9 @@ def getBinaryOperators():
 
 
 def getRightOperators():
+    """"
+    returns: the right operators
+    """
     rights = []
     for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 2:
@@ -69,6 +77,9 @@ def getRightOperators():
 
 
 def getLeftOperators():
+    """"
+    returns: the left operators
+    """
     lefts = []
     for op in getOperatorsAfterConversion():
         if getClass(op).getOperatorLoc() == 0:
@@ -77,6 +88,10 @@ def getLeftOperators():
 
 
 def getClass(sym):
+    """"
+    gets: symbol
+    returns: the class of the symbol
+    """
     dictionary = {
         '+': Plus,
         'B': BinaryMinus,
@@ -96,4 +111,8 @@ def getClass(sym):
 
 
 def getLoc(op):
+    """"
+    gets: operator
+    returns: the location of it
+    """
     return getClass(op).getOperatorLoc()

@@ -24,6 +24,7 @@ def start():
     print(
         "-: Unary minus. Converts a positive number to negative and vice versa. For example: -5 becomes -5, and --5 "
         "becomes 5.")
+    print("enter EXIT to quit")
     print("==============================================================================")
     exp = input("enter your equation: ")
     while exp.strip().upper() != "EXIT":
