@@ -2,6 +2,11 @@ from Symbols import *
 
 
 def conversion(exp):
+    """"
+    first conversion
+    gets : expression
+    returns: switches the minuses to the suiting minus by categorizing it
+    """
     i = 0
     lexp = list(exp)
     i = 0
@@ -19,6 +24,12 @@ def conversion(exp):
 
 
 def signMinusCare(exp):
+    """"
+    second conversion
+    gets : expression after the minus exchange
+    returns: expression where the sign minus is being exchanged by replacing it with unary minus and parentheses
+    so -3 + 6-> (-3) + 6
+    """
     i = 0
     lexp = list(exp)
     while i < len(exp):

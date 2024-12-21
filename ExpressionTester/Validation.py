@@ -1,10 +1,17 @@
 from MinusManage.Convert import conversion
 from Symbols import *
-from MinusManage.Trimmer import allMinusTrimmer
 from MinusManage.Trimmer import minusTrimmer
+
+""""
+in all of this file if there is an error it puts something in errorMessage otherwise it's stays empty
+"""
 
 
 def emptyExpression(exp):
+    """"
+    gets: expression
+    :returns: if its empty empty expression and if its white space expression returns white space expression
+    """
     errorMessage = ""
     if len(exp) > 0:
         if len(exp) == exp.count(' ') + exp.count('\t') + exp.count('\n') + exp.count('\r'):
@@ -15,6 +22,10 @@ def emptyExpression(exp):
 
 
 def validSymbols(exp):
+    """"
+    gets: expression
+    :returns: if its made from valid symbols
+    """
     symbols = getOperators() + getDigits() + getParentheses() + list('.')
     errorMessage = ""
     for char in exp:
@@ -24,6 +35,10 @@ def validSymbols(exp):
 
 
 def validSequence(exp):
+    """"
+    gets: expression
+    :returns: if the only sequence in it is is minus/digits/parentheses
+    """
     last = exp[0]
     count = 0
     dup = []
@@ -46,6 +61,10 @@ def validSequence(exp):
 
 
 def ValidTildeUse(exp):
+    """"
+    gets: expression
+    :returns: if tilde use is valid
+    """
     errorMessage = ""
     if exp.count("~") > 0:
         acceptable = getDigits() + ['(']
@@ -64,6 +83,11 @@ def ValidTildeUse(exp):
 
 
 def bugExplanation(loc, booleans, exp, i):
+    """"
+    the function is being used as an explanation for ValidUseOfOperators() function
+    gets: location,i,expression,booleans list
+    :returns: if the only sequence in it is is minus/digits/parentheses
+    """
     if loc == 1:
         if booleans[0]:
             lst = [exp[i + 1] if i + 1 < len(exp) else "empty", "right"]
@@ -85,18 +109,24 @@ def bugExplanation(loc, booleans, exp, i):
 
 
 def ValidUseOfOperators(exp):
+    """"
+    gets: expression
+    :returns: if the operators in it are being use validly
+    """
     errorMessage = ""
     i = 0
-    orders = [[0, 1, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0]]
     lefts = (getLeftOperators() + getDigits() + list(getParentheses()[0]))
     rights = (getRightOperators() + getDigits() + list(getParentheses()[1]))
     while i < len(exp):
         if exp[i] in getAllOperators():
-            b1 = i - 1 >= 0 and exp[i - 1] in rights
-            b2 = i + 1 < len(exp) and exp[i + 1] in lefts
+            b1 = i - 1 >= 0 and exp[i - 1] in rights  # checks if the operator has valid token on its left (8!+3 or 8+3)
+            b2 = i + 1 < len(exp) and exp[i + 1] in lefts  # checks if the operator has valid token on its right
+            # (8+~3) or (8+3)
             b3 = i + 1 == len(exp) or exp[i + 1] in getBinaryOperators() + getRightOperators() + list(
-                getParentheses()[1])
+                getParentheses()[1])  # checks if the operator has valid token on its right , this used for right
+            # operators (123# + 3)
             b4 = i - 1 == -1 or exp[i - 1] in getBinaryOperators() + getLeftOperators() + list(getParentheses()[0])
+            # checks if the operator has valid token on its left , this used for left operators
             booleans = [b1, b2, b3, b4]
             if exp[i] != 'S':
                 loc = getClass(exp[i]).getOperatorLoc()
@@ -115,6 +145,10 @@ def ValidUseOfOperators(exp):
 
 
 def checkParentheses(exp):
+    """"
+    gets: expression
+    :returns: if the parentheses in it are being use validly
+    """
     errorMessage = ""
     i = 0
     count = 0
@@ -125,14 +159,20 @@ def checkParentheses(exp):
         if ch == ')':
             count -= 1
             if count < 0:
-                errorMessage += ") with no open for it in position: " + str(i) + "\n"
+                errorMessage += ") with no open for it in position: " + str(i+1) + "\n"
         i += 1
     if count != 0:
         errorMessage += "number of ( doesnt match the number of )\n"
+    if exp.count("()") > 0:
+        errorMessage += "cannot open and close parentheses immediately\n"
     return errorMessage
 
 
 def floatValidation(exp):
+    """"
+    gets: expression
+    :returns: if the floats in it are written validly
+    """
     i = 0
     errorMessage = ""
     number = ""
@@ -150,6 +190,11 @@ def floatValidation(exp):
 
 
 def validateFloatNumber(number):
+    """"
+    used as a help function for floatValidation()
+    gets: number
+    :returns: if the number is a float
+    """
     if number.count('.') > 1:
         return number + " is not valid - cannot have more than 1 dot in a number\n"
     index = number.index('.')
@@ -160,6 +205,10 @@ def validateFloatNumber(number):
 
 
 def validateExpression(exp):
+    """"
+    gets: expression
+    :returns: does all the tests functions in the right order and raises the errors with the messages received
+    """
     em = ""
     em += emptyExpression(exp)
     if em != "":

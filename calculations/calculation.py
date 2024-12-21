@@ -2,6 +2,10 @@ from Symbols import *
 
 
 def calc(operator, n1, n2=None):
+    """"
+    gets: operator and two/one number depends on the operator
+    returns: the the answer to the basic calculation
+    """
     op = getClass(operator)
     if op.getOperatorLoc() != 1:
         ans = op.calculate(n1)
@@ -11,6 +15,10 @@ def calc(operator, n1, n2=None):
 
 
 def calculation(pfix):
+    """"
+    gets: a postfix equation
+    returns: calculates the postfix equation
+    """
     answer = []
     i = 0
     for token in pfix:

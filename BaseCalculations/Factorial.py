@@ -3,8 +3,10 @@ from BaseCalculations.Opertaor import Operator
 
 
 class Factorial(Operator):
+    """"this represents the ! - factorial operator"""
     @staticmethod
     def calculate(num1, num2=None):
+        """"returns the factorial of the number"""
         if num1 < 0:
             raise ValueError("Cannot factorial negative numbers")
         if not num1.is_integer():

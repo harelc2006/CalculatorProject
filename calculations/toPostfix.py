@@ -2,10 +2,18 @@ from Symbols import *
 
 
 def isStrongerOperator(op1, op2):
+    """"
+    gets: two operators
+    returns: which operator is stronger
+    """
     return True if getClass(op1).getPriority() >= getClass(op2).getPriority() else False
 
 
 def infixToPostfix(exp):
+    """"
+    gets: infix expression after validation
+    returns: turns it into postfix
+    """
     i = 0
     postfix = []
     operators = []

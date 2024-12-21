@@ -3,8 +3,12 @@ import math
 
 
 class Power(Operator):
+    """
+    this class represents the ^ - power operator
+    """
     @staticmethod
     def calculate(num1, num2):
+        """"puts num1 to the power of num2"""
         if num1 == 0 and num2 == 0:
             raise ValueError("0 cannot be to the power of 0")
         try:

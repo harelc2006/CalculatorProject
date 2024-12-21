@@ -1,4 +1,9 @@
 def minusTrimmer(exp):
+    """"
+    gets: expression after the minus categorization
+    returns: trims sign minuses and unary minuses to only leaves either 2 or 1 depends on the number of sign
+    minuses/unary minuses
+    """
     result = []
     i = 0
     while i < len(exp):
@@ -29,6 +34,11 @@ def minusTrimmer(exp):
 
 
 def allMinusTrimmer(exp):
+    """"
+    gets: expression after the sign minus care
+    returns: trims sign minuses and unary minuses to only leaves either 0 or 1 depends on the number of sign
+    minuses/unary minuses
+    """
     result = []
     i = 0
     while i < len(exp):

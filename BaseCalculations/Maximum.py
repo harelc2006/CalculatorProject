@@ -2,8 +2,10 @@ from BaseCalculations.Opertaor import Operator
 
 
 class Maximum(Operator):
+    """"this represents the $ - maximum operator"""
     @staticmethod
     def calculate(num1, num2):
+        """"return the higher number out num1 and num2"""
         return num1 if num1 > num2 else num2
 
     @staticmethod

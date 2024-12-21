@@ -12,33 +12,43 @@ from BaseCalculations.Power import Power
 from BaseCalculations.Tilde import Tilde
 from BaseCalculations.UnaryMinus import UnaryMinus
 
+""""
+a file for getting symbols instead of writing them each time and in case of adding operators 
+"""
+
 
 def getOperators():
+    """"returns: the operators"""
     return ['+', '-', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#']
 
 
 def getSingleMeaningOperators():
+    """"returns: single meaning operators"""
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#']
 
 
 def getAllOperators():
+    """"returns: the operators after first conversions"""
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#', 'B', 'U', 'S']
 
 
 def getOperatorsAfterConversion():
+    """"returns: the operators after second conversions"""
     return ['+', '*', '/', '^', '%', '$', '&', '@', '~', '!', '#', 'B', 'U']
 
 
-
 def getMinusTypes():
+    """"returns: minus types"""
     return ['B', 'U', 'S']
 
 
 def getDigits():
+    """"returns: list of the numbers"""
     return list("0123456789")
 
 
 def getParentheses():
+    """"returns: the Parentheses"""
     return ['(', ')']
 
 

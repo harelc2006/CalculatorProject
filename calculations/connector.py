@@ -7,6 +7,10 @@ from calculations.toPostfix import infixToPostfix
 
 
 def calculate(exp):
+    """"
+    gets: expression after validation
+    returns: calculates the expression using functions
+    """
     exp = exp.replace(" ", "").replace("\t", "")
     exp = conversion(exp)
     exp = allMinusTrimmer(exp)

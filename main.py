@@ -4,6 +4,7 @@ from colorama import Fore, Style
 
 
 def start():
+    """the actual running of the calculator"""
     print("=" * 78)  # Printing separator
     print("Welcome to My Calculator!")
     print("=======================================================")
@@ -32,6 +33,7 @@ def start():
 
 
 def evaluate(exp):
+    """"evaluates the expression"""
     try:
         if len(exp) > 1500:
             raise MemoryError("expression too long")
