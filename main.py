@@ -5,7 +5,7 @@ from colorama import Fore, Style
 
 def start():
     print("=" * 78)  # Printing separator
-    print("Welcome to the Equation Evaluator!")
+    print("Welcome to My Calculator!")
     print("=======================================================")
     print("Instructions:")
     print("+ plus: Adds numbers together. For example: 4 + 4 = 8")
@@ -19,8 +19,7 @@ def start():
     print("&: Minimum value. Returns the smallest number. For example: 5 & 12 = 5")
     print("$: Maximum value. Returns the largest number. For example: 4 $ 12 = 12")
     print("@: Average value. Returns the average of two numbers numbers. For example: 4 @ 2 = 3")
-    print("#: Custom operation, returns some calculated value based on the context. For example: 123# might return 6 "
-          "(context dependent)")
+    print("#: Custom operation, returns some calculated value based on the context. For example: 123# = 6")
     print(
         "-: Unary minus. Converts a positive number to negative and vice versa. For example: -5 becomes -5, and --5 "
         "becomes 5.")
@@ -34,6 +33,8 @@ def start():
 
 def evaluate(exp):
     try:
+        if len(exp) > 1500:
+            raise MemoryError("expression too long")
         validateExpression(exp)  # Assuming you have a validateExpression function
         exp = exp.strip()
         result = calculate(exp)  # Assuming you have a calculate function
