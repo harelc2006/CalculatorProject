@@ -1,4 +1,5 @@
 from BaseCalculations.Opertaor import Operator
+import math
 
 
 class Power(Operator):
@@ -7,9 +8,11 @@ class Power(Operator):
         if num1 == 0 and num2 == 0:
             raise ValueError("0 cannot be to the power of 0")
         try:
-            return num1 ** num2
-        except Exception:
-            raise ArithmeticError("Too long to calculate")
+            return math.pow(num1, num2)
+        except OverflowError:
+            raise OverflowError("Too long to calculate")
+        except ValueError:
+            raise ValueError("cannot raise negative numbers to the power of non integers")
 
     @staticmethod
     def getPriority():
