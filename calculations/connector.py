@@ -17,4 +17,6 @@ def calculate(exp):
     exp = signMinusCare(exp)
     pfix = infixToPostfix(exp)
     answer = calculation(pfix)
-    return f"{Decimal(calculation(pfix)):.1e}" if answer > 4e+20 or answer < 4e-10 else answer
+    if answer.is_integer():
+        result = int(answer)
+    return f"{Decimal(answer):.1e}" if answer > 4e+20 or (4e-10 > answer > -4e-10)else answer

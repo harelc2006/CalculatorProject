@@ -41,12 +41,10 @@ def evaluate(exp):
         validateExpression(exp)  # Assuming you have a validateExpression function
         exp = exp.strip()
         result = calculate(exp)  # Assuming you have a calculate function
-        if result.is_integer():
-            result = int(result)
         print(f"{Fore.GREEN}✔ answer: {Style.RESET_ALL}{result}")
     except Exception as e:
         # Split exception message to remove redundant newlines and display clean error
-        ems = "\n".join(set(str(e).replace("int too large to convert to float","too long to calculate").split("\n")))
+        ems = "\n".join(set(str(e).replace("int too large to convert to float", "too long to calculate").split("\n")))
         print(f"{Fore.RED}✘ error:{Style.RESET_ALL} {ems}")
 
 

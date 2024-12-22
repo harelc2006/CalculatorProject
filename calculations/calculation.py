@@ -11,7 +11,9 @@ def calc(operator, n1, n2=None):
         ans = op.calculate(n1)
     else:
         ans = op.calculate(n1, n2)
-    return ans
+    if ans > 1.5e+308:
+        raise ArithmeticError("Too long to calculate")
+    return float(ans)
 
 
 def calculation(pfix):

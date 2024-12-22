@@ -9,7 +9,10 @@ class Collapse(Operator):
         if num1 < 0:
             raise ValueError("cannot perform # on a negative number")
         number = (str(num1).replace(".", ""))
-        return sum(int(digit) for digit in number)
+        result = sum(int(digit) for digit in number)
+        if result > 1.5e+308:
+            raise ArithmeticError("Too long to calculate")
+        return float(result)
 
     @staticmethod
     def getPriority():

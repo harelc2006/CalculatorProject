@@ -53,7 +53,7 @@ def validSequence(exp):
     if count > 0:
         dup.append(last)
     errorMessage = ""
-    symbols = getDigits() + getParentheses() + ['-']
+    symbols = getDigits() + getParentheses() + getRightOperators() + ['-']
     for sym in dup:
         if sym not in symbols and sym in getOperators():
             errorMessage += "cannot put " + sym + " consecutively\n"
@@ -225,7 +225,7 @@ def validateExpression(exp):
     em += checkParentheses(exp)
     em += floatValidation(exp)
     if em != "":
-        em = em.replace("S ", "sign minus ")
-        em = em.replace("B ", "binary minus ")
-        em = em.replace("U ", "unary minus ")
+        em = em.replace("S", "sign minus ")
+        em = em.replace("B", "binary minus ")
+        em = em.replace("U", "unary minus ")
         raise SyntaxError(em)
